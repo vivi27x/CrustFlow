@@ -451,7 +451,8 @@ def test_the_sandbox_page_runs_the_emailed_sql(http):
     page = http.get("/sandbox/tok")
     assert page.status_code == 200
     assert "acme_tickets" in page.text and "sandbox_starter.js" in page.text
-    assert "isn't involved" in page.text and "It isn't a Supabase project" in page.text
+    assert "CrustFlow demo for Supabase" in page.text
+    assert "Supabase isn't involved" in page.text and "It isn't a Supabase project" in page.text
 
 
 def test_data_in_the_page_cant_close_the_script_tag(http):
@@ -493,3 +494,34 @@ def test_an_unknown_pill_or_token_is_refused(http):
     sandbox_signup()
     assert http.post("/sandbox/tok/ran", json={"pill": "nope"}).status_code == 404
     assert http.post("/sandbox/other/ran", json={"pill": "other_user"}).status_code == 404
+
+
+def signup_for_page(persona, **fields):
+    signup = db.create_signup("a@acme.io", name="", persona_id=persona)
+    db.update_signup(signup["id"], status=Status.AWAITING_INTENT.value, **fields)
+    return signup["id"]
+
+
+def test_the_page_behind_not_quite_right_names_the_right_company(http):
+    """It used to say Crustdata on a Supabase signup, and promise a search that never runs."""
+    signup_for_page("supabase", intent_token="supa")
+    page = http.get("/intent/supa").text
+    assert "CrustFlow demo for Supabase" in page and "Supabase isn't involved" in page
+    assert "Crustdata" not in page and "first search" not in page
+
+
+def test_a_company_with_searches_keeps_its_own_wording(http):
+    signup_for_page("crustdata", intent_token="crust")
+    page = http.get("/intent/crust").text
+    assert "CrustFlow demo for Crustdata" in page and "first search" in page
+    assert "isn't involved" not in page, "Only a company we imitate needs that line"
+
+
+def test_the_stop_page_says_whose_demo_it_is(http):
+    signup_for_page("supabase", stop_token="stop")
+    assert "CrustFlow demo for Supabase" in http.get("/watch/stop/stop").text
+
+
+def test_an_expired_link_has_no_company_to_name(http):
+    page = http.get("/sandbox/nothing-here")
+    assert page.status_code == 404 and "CrustFlow demo for" not in page.text

@@ -1,9 +1,9 @@
 <!doctype html>
 <html lang="en">
-<head>{% include "_head.html" %}<title>Stop these emails</title></head>
+<head>{% include "_head.html" %}<title>CrustFlow demo for {{ vendor }}</title></head>
 <body class="page">
 <main class="narrow">
-  <p class="brand">CrustFlow</p>
+  {% include "_demo_title.html" %}
   {% if stopped %}
     <h1>Done</h1>
     <p class="lede">You won't get any more of these notes from {{ vendor }}.</p>

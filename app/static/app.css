@@ -158,6 +158,9 @@ button:focus-visible, input:focus-visible, a:focus-visible, summary:focus-visibl
 .narrow, .wide { margin: 0 auto; }
 .narrow { max-width: 460px; padding-top: 8vh; }
 .wide { max-width: 860px; }
+.demo-title { margin-bottom: 22px; padding: 20px 22px; background: #0f1020; border-radius: 12px; }
+.demo-name { margin: 0; font-size: clamp(25px, 6vw, 34px); font-weight: 800; line-height: 1.15; letter-spacing: -0.3px; color: #fff; }
+.demo-sub { margin: 8px 0 0; font-size: 14px; line-height: 1.5; color: #c7cbe0; }
 .notice { margin-bottom: 14px; padding: 7px 10px; background: var(--warn-soft); color: var(--warn); border-radius: 7px; font-size: 13px; font-weight: 600; }
 .brand { margin-bottom: 6px; font-size: 13px; font-weight: 700; color: var(--accent); }
 .page h1 { margin-bottom: 6px; font-size: 26px; line-height: 1.2; }

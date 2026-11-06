@@ -1,9 +1,9 @@
 <!doctype html>
 <html lang="en">
-<head>{% include "_head.html" %}<title>Your {{ vendor }} starter</title></head>
+<head>{% include "_head.html" %}<title>CrustFlow demo for {{ vendor }}</title></head>
 <body class="page" data-token="{{ token }}">
 <main class="wide">
-  {% if sample %}<p class="notice">A CrustFlow demo that imitates {{ vendor }}. {{ vendor }} isn't involved.</p>{% endif %}
+  {% include "_demo_title.html" %}
   <p class="brand">{% if starter.company %}Starter for {{ starter.company }}{% else %}Your starter{% endif %}</p>
   <h1><code class="table-name">{{ starter.table }}</code></h1>
   <p class="lede">{{ starter.purpose }}</p>

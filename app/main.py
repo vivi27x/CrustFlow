@@ -269,6 +269,12 @@ async def health() -> dict[str, str]:
 # ---- Sandbox ----
 
 
+def whose_page(s: Services, signup: dict[str, Any]) -> dict[str, Any]:
+    """Every page an email links to says which company it's a demo for."""
+    persona = run.persona_of(s, signup)
+    return {"vendor": persona.name, "sample": persona.sample}
+
+
 def not_found_page(request: Request, message: str) -> HTMLResponse:
     return templates.TemplateResponse(request, "message.html", {"message": message}, status_code=404)
 
@@ -279,15 +285,16 @@ async def sandbox(token: str, request: Request) -> HTMLResponse:
     if signup is None:
         return not_found_page(request, "This sandbox link has expired. Check your latest email for a new one.")
     if signup.get("starter"):
-        persona = run.persona_of(services(request), signup)
         return templates.TemplateResponse(request, "sandbox_starter.html", {
-            "token": token, "starter": signup["starter"], "vendor": persona.name, "sample": persona.sample,
+            **whose_page(services(request), signup),
+            "token": token, "starter": signup["starter"],
             "activated": bool(signup.get("activated_at")),
             "sql_html": highlight.sql(signup["starter"]["sql"]),
             "project_html": highlight.sql(signup["starter"]["project_only_sql"]),
         })
     request_info = signup["request"]
     context = {
+        **whose_page(services(request), signup),
         "token": token,
         "columns": signup["result_columns"],
         "rows": signup["result_rows"],
@@ -347,6 +354,8 @@ async def intent_page(token: str, request: Request, choice: str = "", running: i
     signup = db.find_signup_by_token("intent_token", token)
     if signup is None:
         return not_found_page(request, "This link has expired.")
+    s = services(request)
+    page = whose_page(s, signup)
     if running:
         status = Status(signup["status"])
         finished = status in (
@@ -355,13 +364,15 @@ async def intent_page(token: str, request: Request, choice: str = "", running: i
         if finished and signup.get("sandbox_token"):
             return RedirectResponse(f"/sandbox/{signup['sandbox_token']}", status_code=303)
         if status in (Status.DELIVERED, Status.NURTURE):
-            return templates.TemplateResponse(request, "message.html", {"message": "Done. Check your email."})
+            return templates.TemplateResponse(request, "message.html", {**page, "message": "Done. Check your email."})
         if finished and signup.get("intent_runs"):
             return templates.TemplateResponse(request, "message.html", {
-                "message": "We couldn't find enough results for that yet. Our team will take a look.",
+                **page, "message": "We couldn't find enough results for that yet. Our team will take a look.",
             })
-    labels = run.persona_of(services(request), signup).buttons()
+    persona = run.persona_of(s, signup)
+    labels = persona.buttons()
     return templates.TemplateResponse(request, "intent.html", {
+        **page, "runs_searches": persona.runs_searches,
         "token": token, "labels": labels, "choice": choice if choice in labels else "", "running": bool(running),
         "exhausted": int(signup.get("intent_runs", 0)) >= run.MAX_INTENT_RUNS,
     })
@@ -432,8 +443,9 @@ async def watch_stop_page(token: str, request: Request) -> HTMLResponse:
     signup = db.find_signup_by_token("stop_token", token) if token else None
     if signup is None:
         return not_found_page(request, "This link has expired.")
-    vendor = run.persona_of(services(request), signup).name
-    return templates.TemplateResponse(request, "stop.html", {"vendor": vendor, "stopped": bool(signup.get("watch_stopped"))})
+    return templates.TemplateResponse(request, "stop.html", {
+        **whose_page(services(request), signup), "stopped": bool(signup.get("watch_stopped")),
+    })
 
 
 @app.post("/watch/stop/{token}", response_class=HTMLResponse)
@@ -443,7 +455,7 @@ async def watch_stop(token: str, request: Request) -> HTMLResponse:
         raise HTTPException(404, "Unknown link")
     s = services(request)
     await watcher.stop(s, signup["id"])
-    return templates.TemplateResponse(request, "stop.html", {"vendor": run.persona_of(s, signup).name, "stopped": True})
+    return templates.TemplateResponse(request, "stop.html", {**whose_page(s, signup), "stopped": True})
 
 
 @app.get("/api/signups/{signup_id}/slack", dependencies=[Protected])

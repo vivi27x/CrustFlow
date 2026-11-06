@@ -2,21 +2,21 @@
 <html lang="en">
 <head>
 {% include "_head.html" %}
-<title>What are you building?</title>
+<title>CrustFlow demo for {{ vendor }}</title>
 {% if running %}<meta http-equiv="refresh" content="2">{% endif %}
 </head>
 <body class="page">
 <main class="narrow">
-  <p class="brand">Crustdata</p>
+  {% include "_demo_title.html" %}
   {% if running %}
-    <h1>Running your first search</h1>
+    <h1>{% if runs_searches %}Running your first search{% else %}Working on your next step{% endif %}</h1>
     <p class="lede">This usually takes a few seconds. This page moves on by itself.</p>
   {% elif exhausted %}
-    <h1>We've already run this for you</h1>
-    <p class="lede">Check your email for your results and your sandbox link.</p>
+    <h1>We've already done this for you</h1>
+    <p class="lede">Check your email for what we sent.</p>
   {% else %}
     <h1>What are you building?</h1>
-    <p class="lede">Pick one and we'll run your first search, with the results and the code.</p>
+    <p class="lede">{% if runs_searches %}Pick one and we'll run your first search, with the results and the code.{% else %}Pick one and we'll show you the best way to start with {{ vendor }}.{% endif %}</p>
     <form method="post" class="choices">
       {% for key, label in labels.items() %}
       <button class="choice{% if key == choice %} chosen{% endif %}" name="choice" value="{{ key }}">{{ label }}</button>

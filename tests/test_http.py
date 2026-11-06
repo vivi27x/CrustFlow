@@ -155,6 +155,13 @@ def test_email_code_wraps_instead_of_widening_the_layout(tmp_path):
     assert "white-space:pre-wrap" in html and "white-space:pre;" not in html
 
 
+def test_the_search_sandbox_says_whose_demo_it_is(client):
+    client.post("/api/signups", json={"email": "priya@hirefast.in"})
+    wait_for_finish(client)
+    signup = client.get("/api/signups/" + client.get("/api/state").json()["signups"][0]["id"]).json()
+    assert "CrustFlow demo for Crustdata" in client.get(f"/sandbox/{signup['sandbox_token']}").text
+
+
 def test_slack_blocks_stay_inside_slacks_limits():
     brief = {
         "who": "x" * 500, "reasons": [{"claim": "y" * 4000, "citations": []}],

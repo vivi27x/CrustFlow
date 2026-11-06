@@ -304,6 +304,11 @@ We listed what every onboarding email does, then pushed four ideas away from it:
 - **Added:** a test that imports the real agent package, which would have caught this.
 - **Also found:** v2 wrote people's X posts into Recent activity, which Claude reads. Posts are now filtered out with the GitHub trail, and the refused `/person/identify` call is gone.
 
+### Links that looked broken
+- **Problem:** emails sent from the laptop link to a private address, so the sandbox opens only on the same network while the server runs. Off that network the button does nothing. Older sends pointed at `localhost`.
+- **Also found:** the page behind "Not quite right?" said Crustdata on a Supabase signup, and promised a search that never runs. Tests passed, because nobody had read it on the Supabase path.
+- **Worked:** every page an email links to now opens with a large "CrustFlow demo for" title, using the signup's company. The private address still needs a public URL to fix.
+
 ### A bug that looked like a data gap
 One signup seemed to be missed by our name check. It wasn't: the agent's report left the fields blank, and the blanks overwrote what our search had found, which dropped the person to asking. Blanks now keep what we knew, when both found the same person.
 

@@ -1,5 +1,5 @@
 <!doctype html>
 <html lang="en">
 <head>{% include "_head.html" %}<title>CrustFlow</title></head>
-<body class="page"><main class="narrow"><p class="brand">CrustFlow</p><p class="lede">{{ message }}</p></main></body>
+<body class="page"><main class="narrow">{% if vendor %}{% include "_demo_title.html" %}{% else %}<p class="brand">CrustFlow</p>{% endif %}<p class="lede">{{ message }}</p></main></body>
 </html>

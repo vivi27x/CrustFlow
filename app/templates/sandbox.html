@@ -1,10 +1,11 @@
 <!doctype html>
 <html lang="en">
-<head>{% include "_head.html" %}<title>Your Crustdata sandbox</title></head>
+<head>{% include "_head.html" %}<title>CrustFlow demo for {{ vendor }}</title></head>
 <body class="page" data-token="{{ token }}">
 <main class="wide">
+  {% include "_demo_title.html" %}
   {% if mode.mode != "live" %}<p class="notice">{{ mode.label }}: everyone shown here is invented.</p>{% endif %}
-  <p class="brand">Crustdata sandbox</p>
+  <p class="brand">{{ vendor }} sandbox</p>
   <h1>Change one filter and run it</h1>
   <p class="lede">Each button runs a live search, with no setup.</p>
 
