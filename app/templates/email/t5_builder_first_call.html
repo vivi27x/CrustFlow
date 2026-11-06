@@ -1,0 +1,15 @@
+{% extends "email/_base.html" %}
+{# T5. Engineers building on the API: real companies, with the code up front, then the MCP command. #}
+{% block body %}{% import "email/_ui.html" as ui %}
+{{ ui.hero(hero) }}
+{{ ui.did_box(did) }}
+{{ ui.card(card) }}
+{{ ui.reasons(reasons) }}
+<h2 style="{{ S.h2 }}">The code that found them</h2>
+<pre style="{{ S.code }}">{{ curl }}</pre>
+<p style="{{ S.text }}">Or give it to your agent. One command connects Crustdata to Claude Code:</p>
+<pre style="{{ S.code }}">{{ mcp_command }}</pre>
+{{ ui.adjust(adjust) }}
+{{ ui.next_step(step, copy_url) }}
+{{ ui.receipt(receipt) }}
+{% endblock %}

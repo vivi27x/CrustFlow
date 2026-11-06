@@ -1,0 +1,11 @@
+{% extends "email/_base.html" %}
+{# Faculty and researchers: recent papers in their field. No contact step: it doesn't fit. #}
+{% block body %}{% import "email/_ui.html" as ui %}
+{{ ui.hero(hero) }}
+{{ ui.did_box(did) }}
+{{ ui.card(card) }}
+{{ ui.reasons(reasons) }}
+{{ ui.adjust(adjust) }}
+{{ ui.receipt(receipt) }}
+{{ ui.dev_line(endpoint, sandbox_url) }}
+{% endblock %}

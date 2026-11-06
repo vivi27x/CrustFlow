@@ -1,0 +1,11 @@
+{% extends "email/_base.html" %}
+{# T4. Investors: founders to look at first, and a watcher for when they move. #}
+{% block body %}{% import "email/_ui.html" as ui %}
+{{ ui.hero(hero) }}
+{{ ui.did_box(did) }}
+{{ ui.card(card) }}
+{{ ui.adjust(adjust) }}
+{{ ui.next_step(step, copy_url) }}
+{{ ui.receipt(receipt) }}
+{{ ui.dev_line(endpoint, sandbox_url) }}
+{% endblock %}

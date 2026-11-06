@@ -1,0 +1,45 @@
+<!doctype html>
+<html lang="en">
+<head>{% include "_head.html" %}<title>Your Crustdata sandbox</title></head>
+<body class="page" data-token="{{ token }}">
+<main class="wide">
+  {% if mode.mode != "live" %}<p class="notice">{{ mode.label }}: everyone shown here is invented.</p>{% endif %}
+  <p class="brand">Crustdata sandbox</p>
+  <h1>Change one filter and run it</h1>
+  <p class="lede">Each button runs a live search, with no setup.</p>
+
+  <div class="pills" id="pills">
+    {% for pill in pills %}
+    <button class="pill" data-pill="{{ pill.id }}" title="{{ pill.hint }}"><span>+ {{ pill.label }}</span><small>{{ pill.hint }}</small></button>
+    {% endfor %}
+  </div>
+  <p class="result-line" id="result-line" role="status">
+    {% if activated %}You've made your second call.{% else %}These are the results from your first search.{% endif %}
+  </p>
+
+  <div class="table-wrap">
+    <table class="results">
+      <thead><tr id="result-head">{% for column in columns %}<th>{{ column }}</th>{% endfor %}</tr></thead>
+      <tbody id="result-body">
+      {% for row in rows %}
+        <tr><td>{% if row.url %}<a href="{{ row.url }}" target="_blank" rel="noopener">{{ row.a }}</a>{% else %}{{ row.a }}{% endif %}</td><td>{{ row.b }}</td><td>{{ row.c }}</td></tr>
+      {% endfor %}
+      </tbody>
+    </table>
+  </div>
+
+  <h2>The exact request</h2>
+  <div class="code-tabs" role="tablist">
+    <button class="code-tab active" data-code="json" role="tab">JSON</button>
+    <button class="code-tab" data-code="curl" role="tab">curl</button>
+    <button class="code-tab" data-code="python" role="tab">Python</button>
+    <button class="copy" id="copy">Copy</button>
+  </div>
+  <p class="endpoint">POST <code id="endpoint">{{ endpoint }}</code></p>
+  <pre class="code" id="code-json">{{ request_json }}</pre>
+  <pre class="code" id="code-curl" hidden>{{ curl }}</pre>
+  <pre class="code" id="code-python" hidden>{{ python }}</pre>
+</main>
+<script src="/static/sandbox.js"></script>
+</body>
+</html>

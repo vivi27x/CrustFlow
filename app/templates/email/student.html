@@ -1,0 +1,10 @@
+{% extends "email/_base.html" %}
+{% block body %}
+<h1 style="margin:0 0 8px;font-size:22px;line-height:1.3;">Learn Crustdata without spending a credit</h1>
+<p style="margin:0 0 18px;font-size:15px;line-height:1.5;color:#33354a;">These two endpoints are free, so they're a good place to start on a project.</p>
+<h2 style="margin:0 0 8px;font-size:15px;">Find any company from its domain</h2>
+<pre style="margin:0 0 16px;padding:12px;background:#0f1020;color:#f3f2ee;border-radius:7px;font-size:12px;line-height:1.45;white-space:pre-wrap;word-break:break-word;">{{ identify_curl }}</pre>
+<h2 style="margin:0 0 8px;font-size:15px;">See which filter values exist</h2>
+<pre style="margin:0 0 16px;padding:12px;background:#0f1020;color:#f3f2ee;border-radius:7px;font-size:12px;line-height:1.45;white-space:pre-wrap;word-break:break-word;">{{ autocomplete_curl }}</pre>
+<p style="margin:0;font-size:13px;"><a href="{{ intent_url }}" style="color:#5546e8;">Not a student? Tell us what you're building.</a></p>
+{% endblock %}

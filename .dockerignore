@@ -1,0 +1,10 @@
+.env
+.env.*
+.git
+.venv
+.vscode
+cache
+notes
+CLAUDE.local.md
+tests
+__pycache__

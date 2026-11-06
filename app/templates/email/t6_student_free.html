@@ -1,0 +1,15 @@
+{% extends "email/_base.html" %}
+{# T6. Students: what's free, and one call to try. No paid credits, no sales alert. #}
+{% block body %}{% import "email/_ui.html" as ui %}
+{{ ui.hero({"title": "Learn Crustdata without spending a credit.", "line": "These cost nothing, so they're a good place to start a project."}) }}
+<table role="presentation" width="100%" cellpadding="0" cellspacing="0" style="background:{{ S.accent }};border-radius:14px;"><tr><td style="padding:12px;">
+<table role="presentation" width="100%" cellpadding="0" cellspacing="0" style="background:#ffffff;border-radius:10px;"><tr><td style="padding:6px 18px;">
+{% for name, what in [("POST /company/identify", "Turn any domain or name into a company."), ("POST /person/search/autocomplete", "See which values a filter accepts before you search."), ("Searches that find nobody", "An empty result is never charged.")] %}
+<p style="margin:0;padding:12px 0;{% if not loop.first %}border-top:1px solid #eeedf4;{% endif %}font-size:14px;line-height:1.45;"><span style="{{ S.mono }}font-size:13px;font-weight:600;color:#0f1020;">{{ name }}</span><br><span style="{{ S.muted }}">{{ what }}</span></p>
+{% endfor %}
+</td></tr></table>
+</td></tr></table>
+<h2 style="{{ S.h2 }}">Try the first one</h2>
+<pre style="{{ S.code }}">{{ identify_curl }}</pre>
+<p style="margin:0;font-size:13px;"><a href="{{ intent_url }}" style="color:{{ S.accent }};">Not a student? Tell us what you're building.</a></p>
+{% endblock %}

@@ -1,0 +1,99 @@
+<!doctype html>
+<html lang="en">
+<head>{% include "_head.html" %}<title>CrustFlow</title></head>
+<body class="console">
+<header class="topbar">
+  <div class="wordmark">CrustFlow <span>the solutions engineer for every signup</span></div>
+  <form id="signup-form" class="signup-form">
+    <select id="signup-persona" aria-label="Vendor">
+      {% for p in mode.personas %}<option value="{{ p.id }}"{% if p.id == mode.persona %} selected{% endif %}>{{ p.name }}</option>{% endfor %}
+    </select>
+    <input id="signup-name" type="text" placeholder="Full name" autocomplete="off" aria-label="Signup name">
+    <input id="signup-email" type="text" placeholder="Work email" autocomplete="off" aria-label="Signup email">
+    <button class="primary">Sign up</button>
+  </form>
+  <div class="actions">
+    <button id="demo-three" class="primary-outline">Run 3 signups</button>
+    <button id="demo-matrix">Test matrix</button>
+    <button id="reset">Reset</button>
+  </div>
+</header>
+
+<div class="mode-row">
+  <span class="mode-badge mode-{{ mode.mode }}">{{ mode.label }}</span>
+  <span class="mode-item">Classifier: {{ mode.llm }}</span>
+  <span class="mode-item">Email: {{ "real" if mode.email_live else "shown here only" }}</span>
+  <span class="mode-item">Slack: {{ "real" if mode.slack_live else "shown here only" }}</span>
+  <span class="mode-item">Founder watch: {{ mode.watch }}</span>
+  <details class="drills">
+    <summary>Failure drills</summary>
+    <div class="drill-buttons">
+      <button data-target="/person/search" data-status="429" data-times="2">429 on search</button>
+      <button data-target="/person/search" data-status="500" data-times="4">500 on search</button>
+      <button data-target="/person/enrich" data-status="500" data-times="4">Person enrich down</button>
+      <button data-target="/person/search" data-status="402" data-times="4">Out of credits</button>
+      <button data-target="llm">Claude down</button>
+      <button data-target="email">Email fails</button>
+      <button data-target="slack">Slack fails</button>
+    </div>
+  </details>
+</div>
+
+<section class="kpis" id="kpis" aria-label="Key numbers"></section>
+
+<main class="columns">
+  <section class="column signups-column">
+    <h2>Signups</h2>
+    <ul id="signups" class="signup-list"></ul>
+    <div id="human-section" hidden>
+      <h2>Human queue</h2>
+      <ul id="human" class="human-list"></ul>
+    </div>
+  </section>
+
+  <section class="column detail-column">
+    <div id="detail-empty" class="empty">
+      <p class="empty-title">No signups yet</p>
+      <p>Type an email above, or press <strong>Run 3 signups</strong>.</p>
+    </div>
+    <div id="detail" hidden>
+      <div class="detail-head">
+        <div>
+          <p id="detail-email" class="detail-email"></p>
+          <p id="detail-route" class="detail-route"></p>
+        <p id="detail-fallback" class="detail-fallback" hidden></p>
+        </div>
+        <dl class="detail-stats">
+          <div><dt>Status</dt><dd id="detail-status"></dd></div>
+          <div><dt>Playbook</dt><dd id="detail-playbook"></dd></div>
+          <div><dt>First result</dt><dd id="detail-time"></dd></div>
+          <div><dt>Credits</dt><dd id="detail-credits"></dd></div>
+        </dl>
+      </div>
+      <ol id="steps" class="steps"></ol>
+      <div class="tabs" role="tablist">
+        <button data-tab="email" role="tab">Email</button>
+        <button data-tab="sandbox" role="tab">Sandbox</button>
+        <button data-tab="sales" role="tab">Sales card</button>
+        <button data-tab="why" role="tab">Reasoning</button>
+        <button data-tab="watch" role="tab">Watch</button>
+      </div>
+      <div id="tab-email" class="tab-body"></div>
+      <div id="tab-sandbox" class="tab-body" hidden></div>
+      <div id="tab-sales" class="tab-body" hidden></div>
+      <div id="tab-why" class="tab-body" hidden></div>
+      <div id="tab-watch" class="tab-body" hidden></div>
+    </div>
+  </section>
+
+  <section class="column log-column">
+    <div class="log-head">
+      <h2>Every call</h2>
+      <label class="toggle"><input type="checkbox" id="log-filter"> This signup only</label>
+    </div>
+    <ol id="log" class="log"></ol>
+  </section>
+</main>
+<script src="/static/dashboard.js"></script>
+</body>
+</html>

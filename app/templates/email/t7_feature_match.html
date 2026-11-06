@@ -1,0 +1,17 @@
+{% extends "email/_base.html" %}
+{% block body %}{% import "email/_ui.html" as ui %}
+{{ ui.hero(hero) }}
+{% if starter %}
+{{ ui.blueprint(starter.file, starter.sections, sandbox_url, "Run it live") }}
+{% if cta %}<div style="margin:18px 0 0;">{{ ui.buttons(cta) }}</div>{% endif %}
+<p style="margin:2px 0 0;{{ S.small }}">It runs in your browser, with no login. It's real Postgres with pgvector, not a {{ vendor }} project. Your sandbox has the whole file to copy, ready for the {{ vendor }} SQL editor.</p>
+<h2 style="{{ S.h2 }}">Or ask your AI editor</h2>
+<p style="{{ S.text }}">With the {% if starter.mcp_url %}<a href="{{ starter.mcp_url }}" style="color:{{ S.accent }};">{{ vendor }} MCP server</a>{% else %}{{ vendor }} MCP server{% endif %} connected, paste this.</p>
+<p style="{{ S.prompt }}">{{ starter.prompt }}</p>
+{% else %}
+{% if card %}{{ ui.card(card) }}{% endif %}
+{% if cta %}<div style="margin:18px 0 0;">{{ ui.buttons(cta) }}</div>{% endif %}
+{% endif %}
+{% if cite %}<p style="margin:14px 0 0;{{ S.small }}">Tailored from: {{ cite }}</p>{% endif %}
+<p style="margin:10px 0 0;font-size:13px;"><a href="{{ intent_url }}" style="color:{{ S.accent }};">Not quite right? Tell us what you're working on.</a></p>
+{% endblock %}

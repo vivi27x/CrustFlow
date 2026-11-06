@@ -1,0 +1,77 @@
+{
+  "id": "crustdata",
+  "name": "Crustdata",
+  "one_liner": "People and company data for AI agents, through an API.",
+  "product": "An indexed, constantly refreshed graph of people, companies, job postings and web data, used through an API or MCP server. Customers search and enrich records to power recruiting tools, sales tools and AI agents. New accounts get free credits and a self-serve API key.",
+  "not_a_fit": "People with no use for people or company data, and data vendors who compete with Crustdata.",
+  "own_domains": [
+    "crustdata.com",
+    "crustdata.co"
+  ],
+  "competitor_domains": [
+    "apollo.io",
+    "brightdata.com",
+    "clearbit.com",
+    "cognism.com",
+    "coresignal.com",
+    "hunter.io",
+    "lusha.com",
+    "peopledatalabs.com",
+    "pitchbook.com",
+    "rocketreach.co",
+    "seamless.ai",
+    "zoominfo.com"
+  ],
+  "segments": [
+    {
+      "id": "recruiting",
+      "label": "Recruiting",
+      "look_for": "They hire or source people as their job: recruiters, talent teams, staffing agencies, or a company with many open roles of its own.",
+      "first_value": "Real candidates for a role they have open, with the code that found them.",
+      "playbook": "recruiting",
+      "sales_alert": true,
+      "hint": "We'll find real candidates for a role."
+    },
+    {
+      "id": "gtm",
+      "label": "Sales & GTM",
+      "look_for": "Their own job is selling or owning revenue: sales, RevOps, growth, business development, AI SDR builders, and founders or leaders of companies that sell to businesses, including those selling to recruiters or HR teams.",
+      "first_value": "Real buyers at companies that fit their market, with the code that found them.",
+      "playbook": "gtm",
+      "sales_alert": true,
+      "hint": "We'll find real buyers in your market."
+    },
+    {
+      "id": "builder",
+      "label": "Building a product",
+      "look_for": "Their own role is technical: engineers, technical founders and data teams building software, data products or AI agents, who would call an API. Judge by their role, not by what their company sells.",
+      "first_value": "A sample of real companies so they can see the data and the code. It's a sample to try the API on, so never call these companies their market, their customers or their users.",
+      "playbook": "builder",
+      "hint": "We'll show you real records and the code."
+    },
+    {
+      "id": "investor",
+      "label": "Investing",
+      "look_for": "They invest: venture capital, private equity, or a scout at a fund.",
+      "first_value": "Founders at fast-growing companies, with the code that found them.",
+      "playbook": "investor",
+      "hint": "We'll find founders worth a look."
+    },
+    {
+      "id": "academic",
+      "label": "Academic research",
+      "look_for": "Faculty or researchers at a university or research lab.",
+      "first_value": "Papers in their field, with the code that found them.",
+      "playbook": "academic",
+      "button": false
+    },
+    {
+      "id": "student",
+      "label": "Learning or a class project",
+      "look_for": "Students and class projects.",
+      "first_value": "A guide to the free endpoints.",
+      "playbook": "student",
+      "hint": "We'll show you what's free to try."
+    }
+  ]
+}

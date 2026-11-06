@@ -1,0 +1,17 @@
+<!doctype html>
+<html lang="en">
+<head>{% include "_head.html" %}<title>Stop these emails</title></head>
+<body class="page">
+<main class="narrow">
+  <p class="brand">CrustFlow</p>
+  {% if stopped %}
+    <h1>Done</h1>
+    <p class="lede">You won't get any more of these notes from {{ vendor }}.</p>
+  {% else %}
+    <h1>Stop notes from {{ vendor }}?</h1>
+    <p class="lede">You'll get no more emails about news from your company.</p>
+    <form method="post" class="choices"><button class="choice">Stop them</button></form>
+  {% endif %}
+</main>
+</body>
+</html>

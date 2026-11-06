@@ -1,0 +1,66 @@
+{% extends "email/_base.html" %}
+{% block body %}
+<h1 style="margin:0 0 8px;font-size:22px;line-height:1.3;">{{ headline }}</h1>
+{% if opening %}<p style="margin:0 0 4px;font-size:15px;line-height:1.5;">{{ opening.claim }}</p>
+<p style="margin:0 0 14px;font-size:12px;line-height:1.5;color:#6b6e7b;">Based on: {% for c in opening.citations %}{{ c.citation|truncate(70, True) }}{% if not loop.last %} · {% endif %}{% endfor %}</p>{% endif %}
+<p style="margin:0 0 18px;font-size:15px;line-height:1.5;color:#33354a;">{% if not opening %}We ran your first Crustdata search for you. {% endif %}These are live results, and the code that produced them is below.{% if searched %}<br><span style="font-size:13px;color:#6b6e7b;">What we searched: {{ searched }}</span>{% endif %}</p>
+
+{% if companies %}
+<h2 style="margin:0 0 8px;font-size:14px;">Companies that fit</h2>
+<table role="presentation" width="100%" cellpadding="0" cellspacing="0" style="border-collapse:collapse;font-size:14px;margin-bottom:18px;">
+<tr>
+<th align="left" style="padding:6px 8px 6px 0;border-bottom:2px solid #0f1020;">Company</th>
+<th align="left" style="padding:6px 8px;border-bottom:2px solid #0f1020;">Size</th>
+<th align="left" style="padding:6px 0 6px 8px;border-bottom:2px solid #0f1020;">Country</th>
+</tr>
+{% for c in companies %}
+<tr>
+<td style="padding:7px 8px 7px 0;border-bottom:1px solid #eeedf4;">{{ c.name }}</td>
+<td style="padding:7px 8px;border-bottom:1px solid #eeedf4;">{{ c.size }}</td>
+<td style="padding:7px 0 7px 8px;border-bottom:1px solid #eeedf4;">{{ c.country }}</td>
+</tr>
+{% endfor %}
+</table>
+<h2 style="margin:0 0 8px;font-size:14px;">Buyers there</h2>
+{% endif %}
+
+<table role="presentation" width="100%" cellpadding="0" cellspacing="0" style="border-collapse:collapse;font-size:14px;">
+<tr>
+<th align="left" style="padding:6px 8px 6px 0;border-bottom:2px solid #0f1020;">{{ columns[0] }}</th>
+<th align="left" style="padding:6px 8px;border-bottom:2px solid #0f1020;">{{ columns[1] }}</th>
+<th align="left" style="padding:6px 0 6px 8px;border-bottom:2px solid #0f1020;">{{ columns[2] }}</th>
+</tr>
+{% for r in rows %}
+<tr>
+<td style="padding:7px 8px 7px 0;border-bottom:1px solid #eeedf4;">{% if r.url %}<a href="{{ r.url }}" style="color:#5546e8;">{{ r.a }}</a>{% else %}{{ r.a }}{% endif %}</td>
+<td style="padding:7px 8px;border-bottom:1px solid #eeedf4;">{{ r.b }}</td>
+<td style="padding:7px 0 7px 8px;border-bottom:1px solid #eeedf4;">{{ r.c }}</td>
+</tr>
+{% endfor %}
+</table>
+
+<table role="presentation" cellpadding="0" cellspacing="0" style="margin:22px 0 6px;"><tr><td style="background:#5546e8;border-radius:7px;">
+<a href="{{ sandbox_url }}" style="display:inline-block;padding:12px 20px;color:#ffffff;font-size:15px;font-weight:600;text-decoration:none;">Run your next search in one click</a>
+</td></tr></table>
+<p style="margin:0 0 22px;font-size:13px;color:#6b6e7b;">No setup needed. It opens in your browser.</p>
+
+<h2 style="margin:0 0 8px;font-size:15px;">Why we picked this search</h2>
+<ul style="margin:0 0 8px;padding-left:18px;font-size:14px;line-height:1.5;">
+{% for reason in reasons %}
+<li style="margin-bottom:8px;">{{ reason.claim }}
+{% for c in reason.citations %}<br><span style="font-size:12px;color:#6b6e7b;">{{ c.value|truncate(110, True) }} ({{ c.citation|truncate(70, True) }})</span>{% endfor %}
+</li>
+{% endfor %}
+</ul>
+{% if relaxed %}<p style="margin:0 0 8px;font-size:13px;color:#6b6e7b;">{{ relaxed }} The code below is the exact search behind these results.</p>{% endif %}
+<p style="margin:0 0 24px;font-size:13px;"><a href="{{ intent_url }}" style="color:#5546e8;">Wrong guess? Tell us what you're building.</a></p>
+
+{% for block in code %}
+<h2 style="margin:0 0 8px;font-size:15px;">{{ block.label }}</h2>
+<p style="margin:0 0 4px;font-size:12px;color:#6b6e7b;">curl</p>
+<pre style="margin:0 0 12px;padding:12px;background:#0f1020;color:#f3f2ee;border-radius:7px;font-size:12px;line-height:1.45;white-space:pre-wrap;word-break:break-word;">{{ block.curl }}</pre>
+<p style="margin:0 0 4px;font-size:12px;color:#6b6e7b;">Python</p>
+<pre style="margin:0 0 18px;padding:12px;background:#0f1020;color:#f3f2ee;border-radius:7px;font-size:12px;line-height:1.45;white-space:pre-wrap;word-break:break-word;">{{ block.python }}</pre>
+{% endfor %}
+<p style="margin:0;font-size:13px;line-height:1.5;color:#33354a;">Working from an AI assistant? Connect Crustdata's MCP server: <code>https://install.crustdata.com/mcp</code></p>
+{% endblock %}

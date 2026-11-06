@@ -1,0 +1,62 @@
+<!doctype html>
+<html lang="en">
+<head>{% include "_head.html" %}<title>Your {{ vendor }} starter</title></head>
+<body class="page" data-token="{{ token }}">
+<main class="wide">
+  {% if sample %}<p class="notice">A CrustFlow demo that imitates {{ vendor }}. {{ vendor }} isn't involved.</p>{% endif %}
+  <p class="brand">{% if starter.company %}Starter for {{ starter.company }}{% else %}Your starter{% endif %}</p>
+  <h1><code class="table-name">{{ starter.table }}</code></h1>
+  <p class="lede">{{ starter.purpose }}</p>
+
+  <p class="result-line" id="status" role="status">Starting Postgres in your browser. The first load takes a few seconds.</p>
+  <p class="starter-note">This is real Postgres with pgvector, running on your device. It isn't a {{ vendor }} project, it needs no login, and what you type stays on your device.</p>
+
+  {% if starter.vector %}
+  <form class="starter-search" id="search-form" hidden>
+    <label for="search">Search</label>
+    <input id="search" autocomplete="off" value="{{ starter.search }}">
+    <button type="submit">Run</button>
+  </form>
+  {% endif %}
+
+  <div class="pills" id="pills" hidden>
+    {% for pill in starter.pills %}
+    <button class="pill" data-pill="{{ pill.id }}" title="{{ pill.hint }}"><span>{{ pill.label }}</span><small>{{ pill.hint }}</small></button>
+    {% endfor %}
+  </div>
+
+  <p class="starter-note" id="signed-in" hidden></p>
+  <div class="table-wrap" id="results-wrap" hidden>
+    <table class="results">
+      <thead><tr id="result-head"></tr></thead>
+      <tbody id="result-body"></tbody>
+    </table>
+  </div>
+  {% if starter.vector %}<p class="starter-note" id="embedding-note" hidden>The embeddings here are a simple word hash, so this runs without an AI key. It matches shared words, not meaning. Use your own model's embeddings for real semantic search.</p>{% endif %}
+
+  <h2>The code that just ran</h2>
+  <p class="starter-note">The same SQL as your email, in one piece, ready for the {{ vendor }} SQL editor. Here, we then give the sample rows two sample owners, so the policy has someone to tell apart.{% if starter.realtime %} The Realtime line runs here too, but only a real project streams changes.{% endif %}</p>
+  <div class="code-card">
+    <div class="code-bar"><span>{{ starter.table }}.sql</span><button class="copy" data-copy="code-sql">Copy</button></div>
+    <pre class="code sql" id="code-sql">{{ sql_html }}</pre>
+  </div>
+
+  {% if starter.project_only_sql %}
+  <h2>Skipped here</h2>
+  <p class="starter-note">These lines need extensions this browser Postgres doesn't have. They're for a real {{ vendor }} project.</p>
+  <div class="code-card">
+    <pre class="code sql" id="code-project">{{ project_html }}</pre>
+  </div>
+  {% endif %}
+
+  <h2>Or ask your AI editor</h2>
+  <p class="starter-note">With the {{ vendor }} MCP server connected, paste this.</p>
+  <div class="code-card">
+    <div class="code-bar"><span>Prompt</span><button class="copy" data-copy="code-mcp">Copy</button></div>
+    <pre class="code sql wrap" id="code-mcp">{{ starter.mcp_prompt }}</pre>
+  </div>
+</main>
+<script id="starter" type="application/json">{{ starter|tojson }}</script>
+<script type="module" src="/static/sandbox_starter.js"></script>
+</body>
+</html>

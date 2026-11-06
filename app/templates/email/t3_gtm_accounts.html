@@ -1,0 +1,12 @@
+{% extends "email/_base.html" %}
+{# T3. Sales, growth and founders: companies that fit their market, and the buyers inside them. #}
+{% block body %}{% import "email/_ui.html" as ui %}
+{{ ui.hero(hero) }}
+{{ ui.did_box(did) }}
+{{ ui.card(card) }}
+{{ ui.reasons(reasons) }}
+{{ ui.adjust(adjust) }}
+{{ ui.next_step(step, copy_url) }}
+{{ ui.receipt(receipt) }}
+{{ ui.dev_line(endpoint, sandbox_url) }}
+{% endblock %}

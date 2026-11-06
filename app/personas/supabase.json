@@ -1,0 +1,140 @@
+{
+  "id": "supabase",
+  "name": "Supabase",
+  "one_liner": "The Postgres development platform.",
+  "product": "Every project is a dedicated Postgres database, with authentication, instant APIs, realtime, edge functions, storage and vector embeddings around it. Developers can start for free, and use any part on its own or the whole platform together.",
+  "not_a_fit": "People who don't build software, or who have no use for a database or backend.",
+  "own_domains": [
+    "supabase.com",
+    "supabase.io"
+  ],
+  "competitor_domains": [],
+  "sample": true,
+  "starter": true,
+  "cta_label": "Start your project",
+  "cta_url": "https://supabase.com/docs/guides/getting-started",
+  "services": [
+    {
+      "id": "database",
+      "name": "Postgres database",
+      "what": "A dedicated Postgres database for every project, portable with no vendor lock-in.",
+      "good_for": "Any app that needs a real relational database.",
+      "url": "https://supabase.com/docs/guides/database/overview"
+    },
+    {
+      "id": "auth",
+      "name": "Authentication",
+      "what": "User sign-ups and logins, with Row Level Security and all major OAuth providers.",
+      "good_for": "Apps with user accounts, or teams that need per-user data access.",
+      "url": "https://supabase.com/docs/guides/auth"
+    },
+    {
+      "id": "storage",
+      "name": "Storage",
+      "what": "S3-compatible storage for any file type.",
+      "good_for": "Apps that handle images, video, documents or user uploads.",
+      "url": "https://supabase.com/docs/guides/storage"
+    },
+    {
+      "id": "realtime",
+      "name": "Realtime",
+      "what": "Sync client state over WebSockets, listen to database changes, track presence and broadcast messages.",
+      "good_for": "Chat, collaboration, live dashboards and multiplayer features.",
+      "url": "https://supabase.com/docs/guides/realtime"
+    },
+    {
+      "id": "edge_functions",
+      "name": "Edge Functions",
+      "what": "Run server-side code close to users, with fast deploys and low latency.",
+      "good_for": "Webhooks, third-party API calls and custom backend logic.",
+      "url": "https://supabase.com/docs/guides/functions"
+    },
+    {
+      "id": "vector",
+      "name": "Vector and AI toolkit",
+      "what": "Store, index and query embeddings with pgvector, next to your relational data.",
+      "good_for": "AI apps: semantic search, RAG and agents.",
+      "url": "https://supabase.com/docs/guides/ai"
+    },
+    {
+      "id": "cron",
+      "name": "Cron",
+      "what": "Schedule recurring jobs with cron syntax inside Postgres.",
+      "good_for": "Reports, cleanups, syncs and anything that runs on a schedule.",
+      "url": "https://supabase.com/docs/guides/cron"
+    },
+    {
+      "id": "queues",
+      "name": "Queues",
+      "what": "Durable message queues with guaranteed delivery, in Postgres.",
+      "good_for": "Background jobs and workflows that must not lose work.",
+      "url": "https://supabase.com/docs/guides/queues"
+    },
+    {
+      "id": "branching",
+      "name": "Branching",
+      "what": "Use branches to test and preview changes. Not included on the Free plan.",
+      "good_for": "Teams shipping database changes through pull requests.",
+      "url": "https://supabase.com/docs/guides/platform/branching"
+    },
+    {
+      "id": "mcp",
+      "name": "MCP server",
+      "what": "Connect AI tools to Supabase using MCP.",
+      "good_for": "Developers working with AI coding assistants.",
+      "url": "https://supabase.com/docs/guides/getting-started/mcp"
+    },
+    {
+      "id": "local_dev",
+      "name": "Local development and CLI",
+      "what": "Develop locally with the Supabase CLI.",
+      "good_for": "Engineers who want to work offline and keep schema changes in version control.",
+      "url": "https://supabase.com/docs/guides/local-development"
+    },
+    {
+      "id": "migration",
+      "name": "Migration guides",
+      "what": "Move data, schemas or projects onto Supabase.",
+      "good_for": "Teams already running on another database or backend.",
+      "url": "https://supabase.com/docs/guides/platform/migrating-to-supabase"
+    },
+    {
+      "id": "compliance",
+      "name": "SOC 2 and HIPAA",
+      "what": "SOC 2 and ISO 27001 on the Team plan, with HIPAA as a paid add-on.",
+      "good_for": "Companies with security reviews, or that handle regulated data.",
+      "url": "https://supabase.com/docs/guides/security/soc-2-compliance"
+    }
+  ],
+  "segments": [
+    {
+      "id": "ai_builders",
+      "label": "Building with AI",
+      "hint": "Embeddings, RAG, agents and AI features.",
+      "look_for": "They build AI products: LLM apps, agents, search or anything that needs embeddings.",
+      "first_value": "Getting vectors and relational data into one Postgres database, so an AI feature needs less infrastructure."
+    },
+    {
+      "id": "product_teams",
+      "label": "Building a product with a team",
+      "hint": "A real product, with users and teammates.",
+      "look_for": "Engineers and founders at startups and small companies building a product.",
+      "first_value": "A backend they can ship on this week, without standing up their own auth, APIs and storage."
+    },
+    {
+      "id": "solo_builders",
+      "label": "A side project",
+      "hint": "Something you're building on your own.",
+      "look_for": "Students, hobbyists and solo developers building something on their own.",
+      "first_value": "A free project they can have running today."
+    },
+    {
+      "id": "larger_companies",
+      "label": "Evaluating for my company",
+      "hint": "Security, compliance and scale matter.",
+      "look_for": "People at larger or regulated companies, or leaders choosing a platform for many engineers, where security review and scale matter.",
+      "first_value": "What a security review needs, and how Supabase fits a larger team.",
+      "sales_alert": true
+    }
+  ]
+}

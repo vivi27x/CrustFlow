@@ -1,0 +1,33 @@
+[project]
+name = "crustflow"
+version = "0.1.0"
+description = "An agent that does a solutions engineer's job for every self-serve Crustdata signup."
+requires-python = ">=3.12"
+dependencies = [
+    "anthropic>=1.0",
+    "claude-agent-sdk>=0.2.178",
+    "email-validator>=2.2",
+    "fastapi>=0.115",
+    "httpx>=0.27",
+    "jinja2>=3.1",
+    "pydantic>=2.9",
+    "pydantic-settings>=2.5",
+    "pygments>=2.21.0",
+    "pyyaml>=6.0.3",
+    "uvicorn[standard]>=0.30",
+]
+
+[dependency-groups]
+dev = [
+    "playwright>=1.64.1",
+    "pytest>=8.3",
+    "pytest-asyncio>=0.24",
+]
+
+[tool.pytest.ini_options]
+asyncio_mode = "auto"
+asyncio_default_fixture_loop_scope = "function"
+testpaths = ["tests"]
+
+[tool.uv]
+package = false

@@ -1,0 +1,38 @@
+# Secrets
+.env
+.env.*
+!.env.example
+
+# Private hackathon strategy (judges review the repo)
+CLAUDE.local.md
+notes/
+
+# Local caches
+cache/
+*.sqlite
+*.db
+
+# Python
+__pycache__/
+*.pyc
+.venv/
+
+# Node
+node_modules/
+.next/
+
+# OS
+.DS_Store
+
+# Real test identities
+scripts/*.local.json
+
+# Editors
+.vscode/
+
+# Organiser handouts (contain contact details and promo codes)
+*.pdf
+
+# Profile reports hold real people's data
+example_user.md
+*.report.md

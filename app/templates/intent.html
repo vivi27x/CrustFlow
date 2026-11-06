@@ -1,0 +1,28 @@
+<!doctype html>
+<html lang="en">
+<head>
+{% include "_head.html" %}
+<title>What are you building?</title>
+{% if running %}<meta http-equiv="refresh" content="2">{% endif %}
+</head>
+<body class="page">
+<main class="narrow">
+  <p class="brand">Crustdata</p>
+  {% if running %}
+    <h1>Running your first search</h1>
+    <p class="lede">This usually takes a few seconds. This page moves on by itself.</p>
+  {% elif exhausted %}
+    <h1>We've already run this for you</h1>
+    <p class="lede">Check your email for your results and your sandbox link.</p>
+  {% else %}
+    <h1>What are you building?</h1>
+    <p class="lede">Pick one and we'll run your first search, with the results and the code.</p>
+    <form method="post" class="choices">
+      {% for key, label in labels.items() %}
+      <button class="choice{% if key == choice %} chosen{% endif %}" name="choice" value="{{ key }}">{{ label }}</button>
+      {% endfor %}
+    </form>
+  {% endif %}
+</main>
+</body>
+</html>

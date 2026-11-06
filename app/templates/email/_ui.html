@@ -1,0 +1,129 @@
+{# Shared parts. Every email template is these, in an order that suits it. Styles live in S (deliver.py). #}
+
+{% macro hero(h) %}
+<h1 style="{{ S.h1 }}">{{ h.title }}</h1>
+{% if h.line %}<p style="{{ S.lead }}">{{ h.line }}</p>{% endif %}
+{% endmacro %}
+
+{% macro did_box(rows, heading="What we did") %}
+<table role="presentation" width="100%" cellpadding="0" cellspacing="0" style="margin:0 0 20px;background:#f6f5fe;border:1px solid #e4e1fb;border-radius:12px;"><tr><td style="padding:14px 16px 6px;">
+<p style="{{ S.label }}">{{ heading }}</p>
+<table role="presentation" width="100%" cellpadding="0" cellspacing="0" style="table-layout:fixed;font-size:13px;line-height:1.5;color:#0f1020;">
+{% for r in rows %}
+<tr><td width="64" valign="top" style="padding:0 0 8px;{{ S.faint }}">{{ r.label }}</td>
+<td style="padding:0 0 8px;{% if r.mono %}{{ S.mono }}font-size:12px;{% endif %}">
+{%- if r.lines %}{% for line in r.lines %}{{ line }}{% if not loop.last %}<br>{% endif %}{% endfor %}{% else %}{{ r.main }}{% endif -%}
+{% if r.sub %}<br><span style="{{ S.small }}">{{ r.sub }}</span>{% endif %}
+</td></tr>
+{% endfor %}
+</table>
+</td></tr></table>
+{% endmacro %}
+
+{% macro card(c) %}
+<table role="presentation" width="100%" cellpadding="0" cellspacing="0" style="background:{{ S.accent }};border-radius:14px;"><tr><td style="padding:12px;">
+<table role="presentation" width="100%" cellpadding="0" cellspacing="0" style="table-layout:fixed;background:#ffffff;border-radius:10px;"><tr><td style="padding:16px 18px 6px;">
+<p style="margin:0 0 2px;font-size:15px;font-weight:700;color:#0f1020;">{{ c.title }}</p>
+{% if c.sub %}<p style="margin:0 0 6px;font-size:13px;{{ S.muted }}">{{ c.sub }}</p>{% endif %}
+<table role="presentation" width="100%" cellpadding="0" cellspacing="0">
+{% for r in c.rows %}
+<tr>
+{% if r.initials %}<td width="44" valign="top" style="padding:12px 0;border-top:1px solid #eeedf4;"><div style="width:32px;height:32px;line-height:32px;border-radius:16px;background:{{ S.accent }};color:#ffffff;font-size:12px;font-weight:700;text-align:center;">{{ r.initials }}</div></td>{% endif %}
+<td valign="top" style="padding:12px 0;border-top:1px solid #eeedf4;font-size:14px;line-height:1.45;">
+{% if r.url %}<a href="{{ r.url }}" style="color:#0f1020;font-weight:600;text-decoration:none;">{{ r.a }}</a>{% else %}<strong>{{ r.a }}</strong>{% endif %}
+{% if r.b %}<br><span style="font-size:13px;{{ S.muted }}">{{ r.b }}</span>{% endif %}
+{% if r.tag %}<br><span style="display:inline-block;margin-top:5px;padding:2px 8px;border-radius:10px;font-size:11px;font-weight:600;{% if r.tag.new %}background:#e6f6ec;color:#1d7a46;{% else %}background:#f1f0f5;color:#5b5e6b;{% endif %}">{{ r.tag.text }}</span>{% endif %}
+</td></tr>
+{% endfor %}
+</table>
+<p style="margin:0;padding:12px 0 10px;border-top:1px solid #eeedf4;font-size:14px;"><a href="{{ c.footer_url }}" style="color:{{ S.accent }};font-weight:600;text-decoration:none;">{{ c.footer }} &rarr;</a></p>
+</td></tr></table>
+</td></tr></table>
+{% if c.dated %}<p style="margin:8px 0 0;{{ S.small }}">Role dates: person/search, experience.employment_details.current.start_date</p>{% endif %}
+{% if c.relaxed %}<p style="margin:4px 0 0;{{ S.small }}">{{ c.relaxed }}</p>{% endif %}
+{% endmacro %}
+
+{% macro reasons(items, heading="Why we picked this search") %}
+{% if items %}
+<h2 style="{{ S.h2 }}">{{ heading }}</h2>
+<ul style="margin:0;padding-left:18px;font-size:14px;line-height:1.5;color:#0f1020;">
+{% for r in items %}<li style="margin-bottom:6px;">{{ r.claim }}{% if r.cite %}<br><span style="{{ S.small }}">{{ r.cite }}</span>{% endif %}</li>{% endfor %}
+</ul>
+{% endif %}
+{% endmacro %}
+
+{% macro buttons(items) %}
+<p style="margin:0;">{% for b in items %}<a href="{{ b.url }}" style="{{ S.btn if b.primary else S.btn_outline }}">{{ b.label }}</a>{% endfor %}</p>
+{% endmacro %}
+
+{% macro adjust(items) %}
+<h2 style="{{ S.h2 }}">Did we get it right?</h2>
+<p style="{{ S.text }}">Pick one. Each opens your sandbox with that change ready to run.</p>
+{{ buttons(items) }}
+{% endmacro %}
+
+{% macro next_step(step, copy_url) %}
+{% if step %}
+<h2 style="{{ S.h2 }}">{{ step.title }}</h2>
+<p style="{{ S.text }}">{{ step.intro }}</p>
+<p style="{{ S.prompt }}">{{ step.ask }}</p>
+{{ buttons([{"label": "Open in Claude, pre-filled", "url": step.claude_url, "primary": "1"}, {"label": "Copy the prompt", "url": copy_url}]) }}
+<p style="margin:0;{{ S.small }}">{{ step.note }}</p>
+{% endif %}
+{% endmacro %}
+
+{% macro receipt(r) %}
+<table role="presentation" width="100%" cellpadding="0" cellspacing="0" style="margin:26px 0 0;border:1px solid #d9d5fb;border-radius:12px;"><tr><td style="padding:14px 16px;">
+<p style="{{ S.label }}">Credit receipt</p>
+<table role="presentation" width="100%" cellpadding="0" cellspacing="0" style="table-layout:fixed;font-size:13px;line-height:1.45;color:#0f1020;">
+{% for line in r.lines %}
+<tr><td style="padding:0 0 6px;">{{ line.what }}<br><span style="{{ S.small }}">{{ line.how }}</span></td>
+<td width="56" align="right" valign="top" style="padding:0 0 6px;{{ S.mono }}">{{ line.amount }}</td></tr>
+{% endfor %}
+<tr><td style="padding:6px 0 0;border-top:1px solid #eeedf4;font-weight:700;">Billed, from X-Credits-Used</td>
+<td align="right" style="padding:6px 0 0;border-top:1px solid #eeedf4;font-weight:700;{{ S.mono }}">{{ r.billed }}</td></tr>
+</table>
+{% if r.indexed %}<p style="margin:10px 0 0;font-size:12px;line-height:1.5;{{ S.muted }}">Free along the way: autocomplete to clean up filter values, and any search that finds nobody.{% if r.tip %} To spend less, {{ r.tip }}{% endif %}</p>{% endif %}
+</td></tr></table>
+{% endmacro %}
+
+{% macro dev_line(endpoint, sandbox_url) %}
+<p style="margin:22px 0 0;font-size:13px;line-height:1.5;{{ S.muted }}">For developers: the exact request{% if endpoint %} (POST {{ endpoint }}){% endif %} is in <a href="{{ sandbox_url }}" style="color:{{ S.accent }};">your sandbox</a> as JSON, curl and Python, ready to paste.</p>
+{% endmacro %}
+
+{% macro blueprint(name, sections, url, link) %}
+{# bgcolor on the cells, because Outlook renders through Word and ignores padding on a pre. #}
+<table role="presentation" width="100%" cellpadding="0" cellspacing="0" bgcolor="#0f1020" style="table-layout:fixed;background:#0f1020;border-radius:12px;">
+<tr><td bgcolor="#1b1d36" style="padding:10px 12px 10px 16px;background:#1b1d36;border-radius:12px 12px 0 0;">
+<table role="presentation" width="100%" cellpadding="0" cellspacing="0"><tr>
+<td style="{{ S.mono }}font-size:12px;color:#c7cbe0;word-break:break-all;">{{ name }}</td>
+{% if url %}<td align="right" width="104" style="font-size:12px;font-weight:600;"><a href="{{ url }}" style="display:inline-block;padding:6px 10px;border-radius:6px;background:{{ S.accent }};color:#ffffff;text-decoration:none;white-space:nowrap;">{{ link }} &rarr;</a></td>{% endif %}
+</tr></table></td></tr>
+{% for s in sections %}
+<tr><td style="padding:16px 16px {% if s.code %}6px{% else %}16px{% endif %};{% if not loop.first %}border-top:1px solid #24264a;{% endif %}">
+<table role="presentation" width="100%" cellpadding="0" cellspacing="0"><tr>
+<td width="3" bgcolor="{{ s.color }}" style="background:{{ s.color }};border-radius:2px;font-size:0;">&nbsp;</td>
+<td style="padding:0 0 0 11px;">
+<div style="font-size:13px;font-weight:700;color:{{ s.color }};">{% if s.url %}<a href="{{ s.url }}" style="color:{{ s.color }};text-decoration:none;">{{ s.title }}</a>{% else %}{{ s.title }}{% endif %}</div>
+{% if s.why %}<div style="margin-top:2px;font-size:13px;line-height:1.45;color:#d6d8e8;">{{ s.why }}</div>{% endif %}
+{% if s.note %}<div style="margin-top:3px;font-size:12px;color:#8a8fa8;">{{ s.note }}</div>{% endif %}
+</td></tr></table></td></tr>
+{% if s.code %}<tr><td style="padding:6px 16px 14px;">
+<pre style="margin:0;{{ S.mono }}font-size:12px;line-height:1.6;color:#e8e7f0;white-space:pre-wrap;word-break:break-word;">{{ s.code }}</pre>
+</td></tr>{% endif %}
+{% endfor %}
+</table>
+{% endmacro %}
+
+{% macro choice_cards(options) %}
+<table role="presentation" width="100%" cellpadding="0" cellspacing="0">
+{% for o in options %}
+<tr><td style="padding:0 0 10px;">
+<a href="{{ o.url }}" style="display:block;padding:16px 18px;border:1px solid #d9d5fb;border-radius:12px;background:#ffffff;text-decoration:none;">
+<span style="display:block;font-size:16px;font-weight:700;color:{{ S.accent }};">{{ o.label }} &rarr;</span>
+<span style="display:block;margin-top:3px;font-size:14px;line-height:1.45;{{ S.muted }}">{{ o.hint }}</span>
+</a>
+</td></tr>
+{% endfor %}
+</table>
+{% endmacro %}

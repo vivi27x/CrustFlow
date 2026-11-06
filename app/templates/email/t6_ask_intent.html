@@ -1,0 +1,7 @@
+{% extends "email/_base.html" %}
+{# T6. Anyone we can't place with confidence: ask, in one click, instead of guessing. #}
+{% block body %}{% import "email/_ui.html" as ui %}
+{{ ui.hero({"title": "What are you building?", "line": line}) }}
+{{ ui.choice_cards(options) }}
+<p style="margin:6px 0 0;{{ S.small }}">Nothing runs until you choose, and it costs you nothing.</p>
+{% endblock %}

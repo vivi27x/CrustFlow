@@ -1,0 +1,8 @@
+{% extends "email/_base.html" %}
+{# T8. A watched founder's company just changed: what fits now, and why. The news itself is cited. #}
+{% block body %}{% import "email/_ui.html" as ui %}
+{{ ui.hero(hero) }}
+{% if sections %}{{ ui.blueprint("Where we'd start now", sections, "", "") }}{% endif %}
+{% if cite %}<p style="margin:14px 0 18px;{{ S.small }}">Tailored from: {{ cite }}</p>{% endif %}
+{% if cta %}{{ ui.buttons(cta) }}{% endif %}
+{% endblock %}

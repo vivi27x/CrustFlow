@@ -1,0 +1,5 @@
+# Profiles of real people: never commit them
+output/
+.venv/
+__pycache__/
+cache/
